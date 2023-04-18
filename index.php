@@ -8,7 +8,7 @@ if(isset($_POST["prodottoCercato"])){
 ?>
 
 <html>
-<form action="index.php" method="POST">
+<form action="" method="POST">
         <input type="text" placeholder="cerca..." name="prodottoCercato">
         <button type="submit">cerca</button>
     </form>
@@ -24,4 +24,27 @@ if(isset($_POST["prodottoCercato"])){
 }else{ //se sono loggato, bottone per logout 
     echo "ciao!".$_SESSION["nome"]."<br>";
     echo "<a href='logout.php'>LOGOUT</a><br>";}
+
+
+    //impaginazione ricerca 
+    if($prodottoCercato != ""){    //se utente ha cercato qualcosa 
+        $sql = "SELECT * from articoli where Titolo LIKE '%$prodottoCercato%'";
+        $result = $conn->query($sql);
+        if($result->num_rows > 0){
+            while($row = $result->fetch_assoc()){                    
+                echo "<tr>".
+                    "<td>".$row["Titolo"]."</td>". 
+                    "<td>".$row["Autore"]."</td>". 
+                    "<td>".$row["Prezzo"]."</td>". 
+                    "<td><img src='img/".$row["IMG"]."'>"."</td>";
+                    echo "</tr>";      
+                    
+                }  
+            }
+        }
+    else{
+        echo "ciao";
+    }
+    
+   
 ?>
