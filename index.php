@@ -1,6 +1,7 @@
 <?php 
 session_start();
 include("connection.php");
+include("prodotto.php");
 $prodottoCercato = "";
 if(isset($_POST["prodottoCercato"])){
     $prodottoCercato = $_POST["prodottoCercato"];     // ricerca di un prodotto nella barra
@@ -11,7 +12,7 @@ if(isset($_POST["prodottoCercato"])){
 <form action="" method="POST">
         <input type="text" placeholder="cerca..." name="prodottoCercato">
         <button type="submit">cerca</button>
-    </form>
+</form>
 </html>
 
 
@@ -21,9 +22,11 @@ if(isset($_POST["prodottoCercato"])){
     echo "<a href='login.php'>LOGIN</a><br>";
     echo "<a href='registrazione.php'>SIGN IN</a><br>";
 
-}else{ //se sono loggato, bottone per logout 
+}else{ //se sono loggato, bottone per logout e carrello 
     echo "ciao!".$_SESSION["nome"]."<br>";
-    echo "<a href='logout.php'>LOGOUT</a><br>";}
+    echo "<a href='carrello.php'>carrello</a>";
+    echo "<a href='logout.php'>LOGOUT</a><br>";
+}
 
 
     //impaginazione ricerca 
@@ -31,20 +34,12 @@ if(isset($_POST["prodottoCercato"])){
         $sql = "SELECT * from articoli where Titolo LIKE '%$prodottoCercato%'";
         $result = $conn->query($sql);
         if($result->num_rows > 0){
-            while($row = $result->fetch_assoc()){                    
-                echo "<tr>".
-                    "<td>".$row["Titolo"]."</td>". 
-                    "<td>".$row["Autore"]."</td>". 
-                    "<td>".$row["Prezzo"]."</td>". 
-                    "<td><img src='img/".$row["IMG"]."'>"."</td>";
-                    echo "</tr>";      
-                    
+            while($row = $result->fetch_assoc()){    
+                $prodotto = new prodotto();
+                $prodotto.print($row);               
                 }  
             }
         }
-    else{
-        echo "ciao";
-    }
     
    
 ?>

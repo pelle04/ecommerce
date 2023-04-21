@@ -14,9 +14,9 @@ if(mysqli_num_rows($result) == 1){
     $row = mysqli_fetch_assoc($result);
     //se accesso andato a buon fine setto la session email e la session loggato e mi manda all homepage  
     $_SESSION["email"] = $email;
-    $_SESSION["nome"]= $row["nome"];
+    $_SESSION["nome"]= $row["Nome"];
     $_SESSION["loggato"] = true;
-    $_SESSION["idUtente"] = $row["id"];
+    $_SESSION["idUtente"] = $row["ID"];
     header('Location: index.php');
 
 }else{
