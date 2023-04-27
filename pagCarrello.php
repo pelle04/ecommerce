@@ -10,7 +10,7 @@ $sql = "SELECT * from carrelli where IDUtente= $idUtente";
         if($result->num_rows > 0){
             while($row = $result->fetch_assoc()){    
                 $carrello = new carrello();
-                $prodotto.print($row);               
+                $carrello.print($row);               
                 }  
             }
         
