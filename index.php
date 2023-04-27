@@ -2,10 +2,7 @@
 session_start();
 include("connection.php");
 include("prodotto.php");
-$prodottoCercato = "";
-if(isset($_POST["prodottoCercato"])){
-    $prodottoCercato = $_POST["prodottoCercato"];     // ricerca di un prodotto nella barra
-}
+include("ClassCarrello.php");
 ?>
 <head>
   <!-- Basic -->
@@ -36,7 +33,7 @@ if(isset($_POST["prodottoCercato"])){
       <header class="header_section">
     <div class="container-fluid">
       <nav class="navbar navbar-expand-lg custom_nav-container">
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="index.php">
           <span>
             pelleClock
           </span>
@@ -50,13 +47,13 @@ if(isset($_POST["prodottoCercato"])){
             </button>
             <div id="myNav" class="overlay">
               <div class="overlay-content">
-                <a href="index.html">Home</a>
+                <a href="index.php">Home</a>
                 <?php
                 if(!$_SESSION["loggato"]){  //se non sono loggato login/signin
-                    echo "<a href='login.html'>login</a>";
+                    echo "<a href='login.php'>login</a>";
                 }else {                     //se sono loggato carrello / account
-                    echo "<a href='pagCarrello.html'>carrello</a>";
-                    echo "<a href='account.html'>account</a>";
+                    echo "<a href='pagCarrello.php'>carrello</a>";
+                    echo "<a href='account.php'>account</a>";
                 }
                 ?>
               </div>
@@ -76,7 +73,7 @@ if(isset($_POST["prodottoCercato"])){
     <div class="container">
       <div class="col-md-9 col-lg-8">
         <div class="detail-box">
-          <h1>
+          <h1 style="color: white;">
           Il tempo è prezioso,
             <br> i nostri orologi lo rendono ancora più speciale
           </h1>
@@ -342,35 +339,28 @@ if(isset($_POST["prodottoCercato"])){
         <div class="col-md-7 px-0">
           <div class="box offer-box1">
             <img src="img/rolexMarchio.jpg" alt="">
-            <div class="detail-box">>
-              <a href="aboutMarchio.php">
-                Shop Now
+            <div class="detail-box">
+              <a href="aboutMarchio.php?id='rolex'">
+                Scopri di più
               </a>
             </div>
           </div>
         </div>
         <div class="col-md-5 px-0">
-          <div class="box offer-box2">
-            <img src="img/apMarchio.jpg" alt="">
-            <div class="detail-box">
-              <a href="">
-                Shop Now
-              </a>
-            </div>
-          </div>
+        
           <div class="box offer-box3">
-            <img src="img/patekMarchio.jpg" alt="">
+            <img src="img/PMarchio.jpg" alt="">
             <div class="detail-box">
-              <a href="">
-                Shop Now
+              <a href="aboutMarchio.php?id='patek'">
+              Scopri di più
               </a>
             </div>
           </div>
           <div class="box offer-box4">
             <img src="img/hublotMarchio.jpg" alt="">
             <div class="detail-box">
-              <a href="">
-                Shop Now
+              <a href="aboutMarchio.php?id='hublot'">
+              Scopri di più
               </a>
             </div>
           </div>
@@ -379,47 +369,143 @@ if(isset($_POST["prodottoCercato"])){
     </div>
   </section>
 
+  <!-- info section -->
+  <section class="info_section layout_padding2">
+    <div class="container">
+      <div class="row info_form_social_row">
+        <div class="col-md-8 col-lg-9">
+          <div class="info_form">
+            <form action="">
+              <input type="email" placeholder="Enter your email">
+              <button>
+                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-3">
+
+          <div class="social_box">
+            <a href="https://it-it.facebook.com">
+              <i class="fa fa-facebook" aria-hidden="true"></i>
+            </a>
+            <a href="https://it-it.facebook.com">
+              <i class="fa fa-twitter" aria-hidden="true"></i>
+            </a>
+            <a href="https://it.linkedin.com">
+              <i class="fa fa-linkedin" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="row info_main_row">
+        <div class="col-md-6 col-lg-3">
+          <div class="info_links">
+            <h4>
+              Menu
+            </h4>
+            <div class="info_links_menu">
+              <a href="index.php">Home</a>
+            <?php
+                if(!$_SESSION["loggato"]){  //se non sono loggato login/signin
+                    echo "<a href='login.php'>login</a>";
+                }else {                     //se sono loggato carrello / account
+                    echo "<a href='pagCarrello.php'>carrello</a>";
+                    echo "<a href='account.php'>account</a>";
+                }
+            ?>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="info_insta">
+            <h4>
+              Instagram
+            </h4>
+            <div class="insta_box">
+              <div class="img-box">
+                <img src="img/p1.png" alt="">
+              </div>
+              <p>
+                aggiornato sulle nuove uscite con i nostri social
+              </p>
+            </div>
+            <div class="insta_box">
+              <div class="img-box">
+                <img src="img/p2.png" alt="">
+              </div>
+              <p>
+               aggiornato sulle nuove uscite con i nostri social
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="info_detail">
+            <h4>
+              About Us
+            </h4>
+            <p class="mb-0">
+            Il nostro negozio è stato fondato con l'obiettivo di offrire ai nostri clienti una vasta scelta di orologi esclusivi e di design, adatti a tutte le esigenze e ai diversi stili di vita. Ci impegniamo a fornire ai nostri clienti un'esperienza di acquisto online facile e sicura, accompagnata da un servizio clienti impeccabile.            </p>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <h4>
+            Contact Us
+          </h4>
+          <div class="info_contact">
+          <a href="https://www.google.it/maps/place/Via+Fratelli+Rosselli,+17,+20833+Giussano+MB,+Italia">
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+              <span>
+                Location
+              </span>
+            </a>
+            <a href="">
+              <i class="fa fa-phone" aria-hidden="true"></i>
+              <span>
+                Call +39 3911882713
+              </span>
+            </a>
+            <a href="">
+              <i class="fa fa-envelope"></i>
+              <span>
+                pelleclock@gmail.com
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end info_section -->
+
+
+  <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <p>
+        &copy; <span id="displayYear"></span> All Rights Reserved By
+         pelleclock srl
+      </p>
+    </div>
+  </footer>
+  <!-- footer section -->
+
+
+  <!-- jQery -->
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <!-- bootstrap js -->
+  <script src="js/bootstrap.js"></script>
+  <!-- custom js -->
+  <script src="js/custom.js"></script>
+
+
+
 </body>
-<form action="" method="POST">
-        <input type="text" placeholder="cerca..." name="prodottoCercato">
-        <button type="submit">cerca</button>
-</form>
+
 </html>
-
-
-<?php
- //se non sono loggato , bottone per loggare/ registrarmi 
- if(!$_SESSION["loggato"] || !isset($_SESSION["loggato"]) ){
-    echo "<div class='contaniner'>
-            <a href='login.php'>LOGIN</a><br>
-            <a href='registrazione.php'>SIGN IN</a>
-          </div>";
-
-}else{ //se sono loggato, bottone per logout e carrello 
-    echo "ciao!".$_SESSION["nome"]."<br>";
-    echo "<a href='pagCarrello.php'>carrello</a>";
-    echo "<a href='logout.php'>LOGOUT</a><br>";
-}
-
-
-    //impaginazione ricerca 
-    if($prodottoCercato != ""){    //se utente ha cercato qualcosa 
-        $sql = "SELECT * from articoli where Titolo LIKE '%$prodottoCercato%'";
-        $result = $conn->query($sql);
-        if($result->num_rows > 0){
-            while($row = $result->fetch_assoc()){    
-                $prodotto = new prodotto();
-                $prodotto.print($row);               
-                }  
-            }
-        }
-    
-   
-?>
-
-
-
-
 <html>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
