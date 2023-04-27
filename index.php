@@ -18,13 +18,13 @@ if(isset($_POST["prodottoCercato"])){
 
 <?php
  //se non sono loggato , bottone per loggare/ registrarmi 
- if(!$_SESSION["loggato"]){
+ if(!$_SESSION["loggato"] || !isset($_SESSION["loggato"]) ){
     echo "<a href='login.php'>LOGIN</a><br>";
     echo "<a href='registrazione.php'>SIGN IN</a><br>";
 
 }else{ //se sono loggato, bottone per logout e carrello 
     echo "ciao!".$_SESSION["nome"]."<br>";
-    echo "<a href='carrello.php'>carrello</a>";
+    echo "<a href='pagCarrello.php'>carrello</a>";
     echo "<a href='logout.php'>LOGOUT</a><br>";
 }
 
