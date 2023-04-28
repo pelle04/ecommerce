@@ -9,7 +9,6 @@ $marchio = $_GET["id"];
 </html>
 
 
-
 <?php
 $sql = "SELECT * from articoli where Marca='$marchio'";
         $result = $conn->query($sql);
