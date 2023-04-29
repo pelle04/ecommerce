@@ -54,7 +54,7 @@ include("ClassCarrello.php");
                 }else {                     //se sono loggato carrello / account
                     echo "<a href='pagCarrello.php'>carrello</a>";
                     echo "<a href='account.php'>account</a>";
-                    echo "<a href='logout.php'>logout</a>";
+                    echo "<a href='pagLogout.php'>logout</a>";
                 }
                 ?>
               </div>
@@ -68,7 +68,7 @@ include("ClassCarrello.php");
     <!-- slider section -->
     <section class="slider_section position-relative">
     <div class="slider_bg_box">
-      <img src="img/slider-bg.jpg" alt="">
+      <img src="img/bg/slider-bg.jpg" alt="">
     </div>
     <div class="slider_bg"></div>
     <div class="container">

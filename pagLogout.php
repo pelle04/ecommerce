@@ -1,13 +1,11 @@
 <?php 
 session_start();
 include("connection.php");
+include("chkSession.php");
 include("prodotto.php");
 include("ClassCarrello.php");
-$prodottoCercato = "";
-if(isset($_POST["prodottoCercato"])){
-    $prodottoCercato = $_POST["prodottoCercato"];     // ricerca di un prodotto nella barra
-}
 ?>
+
 <head>
   <!-- Basic -->
   <meta charset="utf-8" />
@@ -58,7 +56,6 @@ if(isset($_POST["prodottoCercato"])){
                 }else {                     //se sono loggato carrello / account
                     echo "<a href='pagCarrello.php'>carrello</a>";
                     echo "<a href='account.php'>account</a>";
-                    echo "<a href='pagLogout.php'>logout</a>";
                 }
                 ?>
               </div>
@@ -72,302 +69,47 @@ if(isset($_POST["prodottoCercato"])){
     <!-- slider section -->
     <section class="slider_section position-relative">
     <div class="slider_bg_box">
-      <img src="img/bg/prodotti-bg.jpg" alt="">
+      <img src="img/bg/logout-bg.jpg" alt="">
     </div>
     <div class="slider_bg"></div>
     <div class="container">
       <div class="col-md-9 col-lg-8">
         <div class="detail-box">
-          <h1 style="color: white;">
-          Il tempo è prezioso,
-            <br> i nostri orologi lo rendono ancora più speciale
+        <h1 style="color: white;">
+              
+            <br> 
           </h1>
-          <p>
-          Ogni secondo conta, scegli un orologio che ti rappresenta, disponibilità immediata 
-          e spedizione con pagamento alla consegna
-          </p>
+
           <div>
-            <a href="prodotti.php" class="slider-link">Shop Now</a>
+            <a href="logout.php" class="slider-link">esci</a>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <section class="shop_section layout_padding" id="scroll-to">
-    <div class="container">
-      <div class="heading_container heading_center">
-        <h2>
-          Latest Products
-        </h2>
-      </div>
-      <div class="row">
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p1.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Necklace
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $200
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p2.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Necklace
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $300
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p3.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Necklace
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $110
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p4.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Ring
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $45
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p5.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Ring
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $95
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p6.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Earrings
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $70
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p7.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Earrings
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $400
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p8.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Necklace
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $450
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="btn-box">
-        <a href="prodotti.php">
-          View All Products
-        </a>
-      </div>
-    </div>
-  </section>
+ 
 
   <!--about-->
   <section class="about_section  ">
     <div class="container">
       <div class="row">
-        <div class="col-md-6">
-          <div class="img-box">
-            <img src="images/about-img.jpg" alt="">
-          </div>
-        </div>
+      <div class="col-md-6">
+  <div class="img-box" style="float: left;">
+    <img src="img/about.jpg" alt="">
+  </div>
+</div>
         <div class="col-md-6">
           <div class="detail-box">
             <div class="heading_container">
               <h2>
-                About Us
+                Garanzie 
               </h2>
             </div>
             <p>
             Il nostro negozio è stato fondato con l'obiettivo di offrire ai nostri clienti una vasta scelta di orologi esclusivi e di design, adatti a tutte le esigenze e ai diversi stili di vita. Ci impegniamo a fornire ai nostri clienti un'esperienza di acquisto online facile e sicura, accompagnata da un servizio clienti impeccabile.            </p>
-            <a href="blog.php">
+            <a href="garanzie.php">
               Read More
             </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!--marchi-->
-  <section class="offer_section layout_padding">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-7 px-0">
-          <div class="box offer-box1">
-            <img src="img/rolexMarchio.jpg" alt="">
-            <div class="detail-box">
-              <a href="aboutMarchio.php?id='rolex'">
-                Scopri di più
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-5 px-0">
-        
-          <div class="box offer-box3">
-            <img src="img/PMarchio.jpg" alt="">
-            <div class="detail-box">
-              <a href="aboutMarchio.php?id='patek'">
-              Scopri di più
-              </a>
-            </div>
-          </div>
-          <div class="box offer-box4">
-            <img src="img/hublotMarchio.jpg" alt="">
-            <div class="detail-box">
-              <a href="aboutMarchio.php?id='hublot'">
-              Scopri di più
-              </a>
-            </div>
           </div>
         </div>
       </div>
