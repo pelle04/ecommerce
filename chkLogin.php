@@ -21,6 +21,6 @@ if(mysqli_num_rows($result) == 1){
 
 }else{
     echo "<script>alert('credenziali errate')</script>";
-    //header('Location: index.php?msg=errore');
+    
 }
 ?>

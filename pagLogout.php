@@ -95,7 +95,7 @@ include("ClassCarrello.php");
       <div class="row">
       <div class="col-md-6">
   <div class="img-box" style="float: left;">
-    <img src="img/about.jpg" alt="">
+    <img src="img/garanzie.jpg" alt="">
   </div>
 </div>
         <div class="col-md-6">
@@ -106,9 +106,21 @@ include("ClassCarrello.php");
               </h2>
             </div>
             <p>
-            Il nostro negozio è stato fondato con l'obiettivo di offrire ai nostri clienti una vasta scelta di orologi esclusivi e di design, adatti a tutte le esigenze e ai diversi stili di vita. Ci impegniamo a fornire ai nostri clienti un'esperienza di acquisto online facile e sicura, accompagnata da un servizio clienti impeccabile.            </p>
-            <a href="garanzie.php">
-              Read More
+            Garanzia di autenticità:
+Tutti i nostri orologi sono garantiti autentici e originali. Siamo rivenditori autorizzati delle marche che vendiamo, il che significa che i nostri prodotti sono garantiti dalla garanzia ufficiale del produttore.
+
+Garanzia del produttore:
+La maggior parte dei nostri orologi di lusso sono coperti da una garanzia ufficiale del produttore, che copre difetti di fabbricazione o malfunzionamenti. La durata della garanzia varia a seconda della marca e del modello, ma tutti i nostri orologi sono garantiti per un periodo minimo di 2 anni.
+
+Garanzia di restituzione:
+Siamo fiduciosi della qualità dei nostri prodotti e ci impegniamo a soddisfare ogni cliente. Se per qualsiasi motivo non sei soddisfatto del tuo acquisto, offriamo una garanzia di restituzione entro 14 giorni dalla data di consegna dell'orologio. Il prodotto deve essere restituito nello stesso stato in cui è stato ricevuto e con tutti gli accessori originali.
+
+Garanzia di assistenza post-vendita:
+Siamo felici di offrire assistenza post-vendita ai nostri clienti, anche dopo la scadenza della garanzia del produttore. Offriamo servizi di riparazione e manutenzione per i nostri orologi di lusso, sia per i problemi più semplici che per le riparazioni più complesse. Il nostro team di esperti è in grado di offrire assistenza per qualsiasi marca e modello.
+
+In sintesi, la nostra azienda si impegna a fornire ai nostri clienti una garanzia completa e affidabile. Ci assicuriamo che tutti i nostri prodotti siano autentici e originali e coperti da una garanzia ufficiale del produttore. Inoltre, offriamo una garanzia di restituzione e assistenza post-vendita per garantire la soddisfazione dei nostri clienti. Con la nostra azienda, puoi essere sicuro di avere la migliore esperienza di acquisto possibile.          
+  <a href="logout.php">
+              esci
             </a>
           </div>
         </div>
