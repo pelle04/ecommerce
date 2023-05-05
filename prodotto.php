@@ -15,8 +15,8 @@ class prodotto{
         $this->Prezzo = $row["Prezzo"];
         $this->Descrizione = $row["Descrizione"];
         $this->immagine =array_key_exists( 'Immagine',$row) ? $_POST['Immagine'] : '' ; //nome file
-        $strImmagine ="<img src='img/".$row["Immagine"]."'>";
-        return $row["Titolo"].$row["Marca"].$row["Prezzo"].$row["Descrizione"].$this->immagine;
+        $strImmagine ="<img src='img/prodotti".$row["IMG"]."'>";
+        return $row["Titolo"].$row["Marca"].$row["Prezzo"].$row["Descrizione"];$this->immagine;
     }
 
 }

@@ -30,6 +30,8 @@ if(isset($_POST["prodottoCercato"])){
   <link href="css/style.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="css/responsive.css" rel="stylesheet" />
+  <link href="css/InputType.css" rel="stylesheet" />
+
 
 </head>
 <body>
@@ -87,7 +89,7 @@ if(isset($_POST["prodottoCercato"])){
           e spedizione con pagamento alla consegna
           </p>
           <div>
-            <a href="prodotti.php" class="slider-link">Shop Now</a>
+           
           </div>
         </div>
       </div>
@@ -96,218 +98,61 @@ if(isset($_POST["prodottoCercato"])){
   <section class="shop_section layout_padding" id="scroll-to">
     <div class="container">
       <div class="heading_container heading_center">
+      <form action="" method="POST">
+        <input type="text" placeholder="cerca..." name="prodottoCercato">
+        <button type="submit">cerca</button>
+      </form>
         <h2>
-          Latest Products
+          Nostri Prodotti
         </h2>
       </div>
-      <div class="row">
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p1.png" alt="">
+      <?php
+if($prodottoCercato != ""){    //se utente ha cercato qualcosa 
+  $sql = "SELECT * from articoli where Titolo LIKE '%$prodottoCercato%'";
+  $result = $conn->query($sql);
+  if($result->num_rows > 0){
+      while($row = $result->fetch_assoc()){  
+
+          /*echo "<tr>".
+              "<td>".$row["Titolo"]."</td>". 
+              "<td>".$row["Autore"]."</td>". 
+              "<td>".$row["Prezzo"]."</td>". 
+              "<td><img src='img/product/".$row["IMG"]."'>"."</td>";
+              echo "</tr>"; */
+          echo "
+        <div class='col-sm-6 col-md-4 col-lg-3'>
+          <div class='box'>
+            <a href=''>
+              <div class='img-box'>
+               <img src='img/product/".$row["IMG"]."' alt=''>
               </div>
-              <div class="detail-box">
+              <div class='detail-box'>
                 <h6>
-                  Necklace
+                  ".$row['Titolo']."
                 </h6>
                 <h6>
-                  Price
+                  Prezzo
                   <span>
-                    $200
+                  ".$row['Prezzo']."
                   </span>
                 </h6>
               </div>
-              <div class="new">
+              <div class='new'>
                 <span>
                   New
                 </span>
               </div>
             </a>
           </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p2.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Necklace
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $300
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p3.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Necklace
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $110
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p4.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Ring
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $45
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p5.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Ring
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $95
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p6.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Earrings
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $70
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p7.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Earrings
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $400
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="images/p8.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Necklace
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $450
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="btn-box">
-        <a href="prodotti.php">
-          View All Products
-        </a>
-      </div>
-    </div>
+        </div>";
+              
+          }  
+      }
+  }
+else{
+  echo "ciao";
+}
+      ?>
   </section>
 
   <!--marchi-->
@@ -353,12 +198,7 @@ if(isset($_POST["prodottoCercato"])){
       <div class="row info_form_social_row">
         <div class="col-md-8 col-lg-9">
           <div class="info_form">
-            <form action="">
-              <input type="email" placeholder="Enter your email">
-              <button>
-                <i class="fa fa-arrow-right" aria-hidden="true"></i>
-              </button>
-            </form>
+           
           </div>
         </div>
         <div class="col-md-4 col-lg-3">
