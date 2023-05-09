@@ -22,6 +22,7 @@ class DB {
   }
 
   public function login($passwordArg,$emailArg){
+    session_start();
     $sql = "SELECT * from utenti where email=? and password=?";
     $stm = $this->conn->prepare($sql);
     $stm->bind_param("ss",$emailArg,$passwordArg);
@@ -39,6 +40,8 @@ class DB {
       $_SESSION["idUtente"] = $row["ID"];
       header('Location: index.php');
   
+  }else{
+    echo "errore";
   }
   }
 
