@@ -54,7 +54,7 @@ $bgColor:#f9fafa;
 @import url("../fonts/octin_sports_rg.ttf");
 
 body {
-  @include main-font;
+  @include_once main-font;
   color: #0c0c0c;
   background-color: #ffffff;
   overflow-x: hidden;
@@ -95,7 +95,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  @include secondary-font();
+  @include_once secondary-font();
 
   h2 {
     position: relative;
@@ -113,7 +113,7 @@ body {
 
 h1,
 h2 {
-  @include secondary-font();
+  @include_once secondary-font();
 }
 
 /*header section*/
@@ -342,7 +342,7 @@ a:focus {
     }
 
     .slider-link {
-      @include hero_btn2($primary1, $white, 10px, 45px, 5px);
+      @include_once hero_btn2($primary1, $white, 10px, 45px, 5px);
       margin-top: 35px;
     }
   }
@@ -430,7 +430,7 @@ a:focus {
     margin-top: 45px;
 
     a {
-      @include hero_btn($primary1, $white, 10px, 40px, 5px);
+      @include_once hero_btn($primary1, $white, 10px, 40px, 5px);
     }
   }
 }
@@ -473,7 +473,7 @@ a:focus {
     }
 
     a {
-      @include hero_btn($primary1, $white, 10px, 45px, 0);
+      @include_once hero_btn($primary1, $white, 10px, 45px, 0);
     }
   }
 }
@@ -519,7 +519,7 @@ a:focus {
       }
 
       a {
-        @include hero_btn2($primary1, $white, 8px, 40px, 0);
+        @include_once hero_btn2($primary1, $white, 8px, 40px, 0);
         margin-top: 10px;
       }
     }
@@ -615,7 +615,7 @@ a:focus {
       }
 
       a {
-        @include hero_btn2($primary2, $white, 10px, 30px, 0);
+        @include_once hero_btn2($primary2, $white, 10px, 30px, 0);
       }
     }
   }
@@ -745,7 +745,7 @@ a:focus {
         font-size: 12px;
         outline: none;
         border: none;
-        @include hero_btn($primary1, $white, 15.5px, 25px, 0);
+        @include_once hero_btn($primary1, $white, 15.5px, 25px, 0);
       }
     }
   }

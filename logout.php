@@ -1,7 +1,6 @@
 <?php
 session_start();
-include("connection.php");
-include("chkSession.php");
+include_once("init.php");
 $_SESSION["loggato"] = false;
 $_SESSION["nome"]="";
 $_SESSION["idUtente"] = "";

@@ -1,7 +1,10 @@
 28/04
 
--1 caricare immagini in latest product 
--2 pagina account
--3 pagina prodotti 
--4 pagina about marca 
--5 mandare email quando fai enter your email 
+
+-4 about marchi 
+- pag carrello
+- pag account
+- pag checkOut
+-related item pag prodotto
+- far funzionare cookie e carrello ecc
+- sstemare con le classi

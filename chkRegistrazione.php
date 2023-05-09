@@ -1,6 +1,6 @@
 <?php 
 session_start();
-include("connection.php");
+include_once("connection.php");
 $nome = $_POST['nome'];
 $cognome = $_POST['cognome'];
 $email = $_POST['email'];
