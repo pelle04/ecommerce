@@ -68,7 +68,7 @@ class DB {
 
  public function select_like($tableName, $columns = array(), $str) {
 
-    $query = 'SELECT * from prodotti where Titolo LIKE "%'. $str.'%"';
+    $query = 'SELECT * from articoli where Titolo LIKE "%'. $str.'%"';
 
    /* $strCol = '';
     //var_dump($columns); die;

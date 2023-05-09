@@ -53,7 +53,7 @@ if(isset($_POST["prodottoCercato"])){
 
 if($prodottoCercato != ""){    //se utente ha cercato qualcosa 
   $productManager = new ProductManager();
-  $prodotti = $productManager->getLike("$prodottoCercato");  //tutti i prodotti
+  $prodotti = $productManager->getLike($prodottoCercato);  //tutti i prodotti
   
   foreach($prodotti as $prodotto): 
     echo "
@@ -83,9 +83,7 @@ if($prodottoCercato != ""){    //se utente ha cercato qualcosa
           </div>
         </div>";   
   endforeach;
-}
-      
-
+}else{
 
   $productManager = new ProductManager();
   $products = $productManager->getAll();  //tutti i prodotti
@@ -119,6 +117,12 @@ if($prodottoCercato != ""){    //se utente ha cercato qualcosa
         </div>";   
   endforeach;
 
+
+}
+      
+
+
+ 
       ?>
   </section>
  <?php
