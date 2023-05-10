@@ -8,8 +8,7 @@ $idUtente = $_SESSION["idUtente"];
 $quantita = $_GET["quantita"];
 $idProdotto = $_GET["idProdotto"];
 $cart = new CartManager();
-$cart->addToCart($idProdotto,$quantita);  //setta il cookie del carrello 
-$cart->controllaCookieCarrello($idUtente,$quantita,"+");
+$cart->removeFromCart($idProdotto,$quantita);  //setta il cookie del carrello 
+$cart->controllaCookieCarrello($idUtente,$quantita,"-");
 header("Location: pagCarrello.php");
 ?>
-

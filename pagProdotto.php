@@ -42,7 +42,7 @@ if(isset($_GET["id"])){
                         <p class='lead'>".$row['Descrizione']."</p>
                         <div class='d-flex'>
 
-                        <form action='addCart.php' method='POST'>  
+                        <form action='addCart.php' method='GET'>  
                         <input type='hidden' name='img' value='img/product/".$row['IMG']."'>
                         <input type='hidden' name='idProdotto' value='".$row['Codice']."'>
                         <input type='hidden' name='prodotto' value='".$row['Titolo']."'>

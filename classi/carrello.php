@@ -22,31 +22,65 @@ class CartManager extends DBManager {
 
     }
 
-    public function removeFromCart($idProdotto){
-        $carrello = isset($_COOKIE['carrello']) ? json_decode($_COOKIE['carrello'], true) : [];
+    public function removeFromCart($idProdotto,$quantita){
+        $carrello = isset($_COOKIE['carrello']) ? json_decode($_COOKIE['carrello'], true) : []; //recupera il carrello dal cookie se è presente
+
         if (isset($carrello[$idProdotto])) {
-            unset($carrello[$idProdotto]);
+            $carrello[$idProdotto] -= $quantita;
+        }
+
+           // Imposta il carrello come cookie per un'ora
+       setcookie('carrello', json_encode($carrello), time() + 3600, '/');
+    }
+
+
+    //in sottr
+    private function refreshDBTogli($idCarrello, $carrello, $idUtente, $quantita) {
+        global $conn;
     
-            // Imposta il carrello aggiornato come cookie
-            setcookie('carrello', json_encode($carrello), time() + 3600, '/');
+        // Aggiungi i prodotti aggiornati al carrello nel database
+        foreach ($carrello as $idProdotto => $quantita) {
+            $query = "SELECT * FROM contiene WHERE IDCarrello = $idCarrello";
+            $result = mysqli_query($conn, $query);
+    
+            if (mysqli_num_rows($result) == 0) {
+                echo "Non puoi rimuovere, non c'è.";
+            } else {
+                // Rimuovi i record correlati nella tabella ordini
+                $deleteOrdiniQuery = "DELETE FROM ordini WHERE IDCarrello = $idCarrello";
+                mysqli_query($conn, $deleteOrdiniQuery);
+    
+                // Rimuovi i record nella tabella contiene
+                $deleteQuery = "DELETE FROM contiene WHERE IDCarrello = $idCarrello";
+                mysqli_query($conn, $deleteQuery);
+            }
+    
+            $checkQuery = "SELECT * FROM carrelli WHERE ID = $idCarrello AND IDUtente = $idUtente";
+            $result = mysqli_query($conn, $checkQuery);
+    
+            if (mysqli_num_rows($result) != 0) {
+                // Rimuovi la riga nella tabella carrelli
+                $deleteCarrelloQuery = "DELETE FROM carrelli WHERE ID = $idCarrello AND IDUtente = $idUtente";
+                mysqli_query($conn, $deleteCarrelloQuery);
+            } else {
+                echo "Non puoi rimuovere, non c'è.";
+            }
         }
     }
 
 
-    private function refreshDB($idCarrello, $carrello ,$idUtente,$quantita) {
+    //in aggiunta
+    private function refreshDB($idCarrello, $carrello ,$idUtente,$quantita,) {
         global $conn;
-        // Rimuovi i prodotti precedenti dal carrello nel database
-     //   $queryRimuovi = "DELETE FROM carrelli WHERE ID = $idCarrello";
-      //  mysqli_query($conn, $queryRimuovi);
 
         // Aggiungi i prodotti aggiornati al carrello nel database
         foreach ($carrello as $idProdotto => $quantita) {
             
-            $query = "SELECT * FROM contiene WHERE IDCarrello = $idCarrello";
+            $query = "SELECT * FROM contiene WHERE IDCarrello = $idCarrello AND IDArticolo = $idProdotto";
             $result = mysqli_query($conn, $query);        
             if (mysqli_num_rows($result) == 0) {
                 // Il record non esiste, esegui l'inserimento
-                $queryAggiungiContiene = "INSERT INTO contiene (QuantitaContiene,Commento,IDArticolo,IDCarrello) VALUES ($quantita,NULL,$idProdotto,$idCarrello)";
+                $queryAggiungiContiene = "INSERT INTO contiene (QuantitaContiene, Commento, IDArticolo, IDCarrello) VALUES ($quantita, NULL, $idProdotto, $idCarrello)";
                 mysqli_query($conn, $queryAggiungiContiene);
             }else{
                 echo "Errore: Il record esiste già nel database.";
@@ -64,7 +98,7 @@ class CartManager extends DBManager {
         }
     }
 
-    public function controllaCookieCarrello($idUtente,$quantita) {
+    public function controllaCookieCarrello($idUtente,$quantita,$segno) {
         if ($this->utenteEsiste($idUtente)) {
             // Verifica se il cookie del carrello è impostato
             if (isset($_COOKIE['carrello'])) {
@@ -73,7 +107,11 @@ class CartManager extends DBManager {
     
                 // Esegui l'aggiornamento nel database
                 $idCarrello = $this->getCarrelloID($idUtente);
-                $this->refreshDB($idCarrello, $carrello,$idUtente,$quantita);
+                if($segno == '-'){
+                    $this->refreshDBTogli($idCarrello, $carrello,$idUtente,$quantita);
+                }else{
+                    $this->refreshDB($idCarrello, $carrello,$idUtente,$quantita);
+                }
             }
         }
     }
@@ -96,7 +134,7 @@ class CartManager extends DBManager {
         $result = mysqli_query($conn, $query);
         return mysqli_num_rows($result) > 0;
     }
-    private function getCarrelloID($idUtente) {
+    public function getCarrelloID($idUtente) {
         global $conn;
 
         // Query per ottenere l'ID del carrello
@@ -129,7 +167,7 @@ class CartManager extends DBManager {
         // Recupera i dettagli dei prodotti presenti nel carrello
         foreach ($carrello as $idProdotto => $quantita) {
             // Esegue la query per recuperare i dettagli del prodotto dal database
-            $query = "SELECT * FROM articoli WHERE Codice = $idProdotto";
+            $query = "SELECT * FROM articoli WHERE Codice = '$idProdotto'";
             $result = mysqli_query($conn, $query);
     
             if ($result && mysqli_num_rows($result) > 0) {
@@ -162,7 +200,101 @@ class CartManager extends DBManager {
         }
         return $objects;
     }
+
+    public function checkOut($idUtente) {
+        global $conn;
+    
+        // Inizia la transazione
+        mysqli_begin_transaction($conn);
+    
+        try {
+            // Recupera il carrello dell'utente dal database
+            $queryCarrello = "SELECT * FROM carrelli WHERE IDUtente = $idUtente";
+            $resultCarrello = mysqli_query($conn, $queryCarrello);
+    
+            if (mysqli_num_rows($resultCarrello) == 0) {
+                throw new Exception("Il carrello dell'utente non è stato trovato.");
+            }
+    
+            // Calcola il totale dell'ordine
+            $totale = 0;
+    
+            // Esegue il checkout dei prodotti presenti nel carrello
+            while ($rowCarrello = mysqli_fetch_assoc($resultCarrello)) {
+                $idCarrello = $rowCarrello['ID'];
+    
+                // Recupera i prodotti presenti nel carrello
+                $queryProdottiCarrello = "SELECT * FROM contiene WHERE IDCarrello = $idCarrello";
+                $resultProdottiCarrello = mysqli_query($conn, $queryProdottiCarrello);
+    
+                if (mysqli_num_rows($resultProdottiCarrello) == 0) {
+                    throw new Exception("Nessun prodotto presente nel carrello.");
+                }
+    
+                // Esegue il checkout di ciascun prodotto
+                while ($rowProdottoCarrello = mysqli_fetch_assoc($resultProdottiCarrello)) {
+                    $idProdotto = $rowProdottoCarrello['IDArticolo'];
+                    $quantita = $rowProdottoCarrello['QuantitaContiene'];
+    
+                    // Controlla se il prodotto è disponibile
+                    $queryControlloQuantita = "SELECT * FROM articoli WHERE Codice = $idProdotto";
+                    $resultControlloQuantita = mysqli_query($conn, $queryControlloQuantita);
+    
+                    if (mysqli_num_rows($resultControlloQuantita) == 0) {
+                        throw new Exception("Il prodotto $idProdotto non è disponibile.");
+                    }
+    
+                    $rowArticolo = mysqli_fetch_assoc($resultControlloQuantita);
+                    $quantitaArticolo = $rowArticolo['Quantita'];
+    
+                    if ($quantita > $quantitaArticolo) {
+                        throw new Exception("Quantità insufficiente del prodotto $idProdotto disponibile.");
+                    }
+    
+                    // Aggiorna la quantità del prodotto
+                    $nuovaQuantitaArticolo = $quantitaArticolo - $quantita;
+                    $updateArticolo = "UPDATE articoli SET Quantita = $nuovaQuantitaArticolo WHERE Codice = $idProdotto";
+                    mysqli_query($conn, $updateArticolo);
+    
+                    // Calcola il prezzo del prodotto e aggiungi al totale dell'ordine
+                    $prezzoProdotto = $rowArticolo['Prezzo'];
+                    $totale += $prezzoProdotto * $quantita;
+                }
+    
+                // Svuota il carrello
+                $deleteCarrello = "DELETE FROM contiene WHERE IDCarrello = $idCarrello";
+                mysqli_query($conn, $deleteCarrello);
+            }
+
+            // Registra l'ordine
+            $dataOrdine = date('Y-m-d');
+            $insertOrdine = "INSERT INTO ordini (Data, Prezzo, IDCarrello) VALUES ('$dataOrdine', $totale, $idCarrello)";
+            mysqli_query($conn, $insertOrdine);
+    
+            // Conferma la transazione
+            mysqli_commit($conn);
+    
+            // Restituisce true se il checkout è stato completato con successo
+            return true;
+        } catch (Exception $e) {
+            // Annulla la transazione
+            mysqli_rollback($conn);
+            return false;
+        }
+    }
   }
+
+
+  
+
+
+
+
+
+
+
+
+
 
 
   class CartItemManager extends DBManager {

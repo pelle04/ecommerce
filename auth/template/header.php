@@ -29,7 +29,6 @@ session_start();
                     echo "<a href='login.php'>log in</a>";
                 }else {                     //se sono loggato carrello / account
                     echo "<a href='pagCarrello.php'>carrello</a>";
-                    echo "<a href='account.php'>account</a>";
                     echo "<a href='logout.php'>logout</a>";
                     
                 }

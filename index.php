@@ -6,8 +6,9 @@ include_once("auth/template/head.php");
       <!-- header-->
      <?php
       include("auth/template/header.php");
-      echo $_COOKIE["carrello"];
-      echo $_SESSION["idUtente"];
+      //echo $_SESSION["admin"];
+      
+
      ?>
 
     <!-- slider section -->

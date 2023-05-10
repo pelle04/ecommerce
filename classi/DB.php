@@ -38,6 +38,7 @@ class DB {
       $_SESSION["nome"]= $row["Nome"];
       $_SESSION["loggato"] = true;
       $_SESSION["idUtente"] = $row["ID"];
+      $_SESSION["admin"] = $row["Admin"];
       header('Location: index.php');
   
   }else{
@@ -48,6 +49,7 @@ class DB {
   public function signin($passwordArg,$emailArg,$nomeArg,$cognomeArg,$dataNascitaArg){
     session_start();
     $admin = 0;
+    $_SESSION["admin"] = $admin;
     $sql = "INSERT into utenti (Nome,Cognome,Admin,Password,Email,DataNascita) values(?,?,?,?,?,?)";
     $stm = $this->conn->prepare($sql);
     $stm->bind_param("ssissd",$nomeArg,$cognomeArg,$admin,$passwordArg,$emailArg,$dataNascitaArg);
