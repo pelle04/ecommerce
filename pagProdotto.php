@@ -42,7 +42,9 @@ if(isset($_GET["id"])){
                         <p class='lead'>".$row['Descrizione']."</p>
                         <div class='d-flex'>
 
-                        <form action='pagCarrello.php' method='POST'>
+                        <form action='addCart.php' method='POST'>  
+                        <input type='hidden' name='img' value='img/product/".$row['IMG']."'>
+                        <input type='hidden' name='idProdotto' value='".$row['Codice']."'>
                         <input type='hidden' name='prodotto' value='".$row['Titolo']."'>
                         <input name='quantita' class='form-control text-center me-3' id='inputQuantity' type='num' value='1' style='max-width: 3rem'/>
                         <input type='submit' name='aggiungi_al_carrello' value='aggiungi al carrello' class='btn btn-outline-dark flex-shrink-0'><br>

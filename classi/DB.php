@@ -45,6 +45,25 @@ class DB {
   }
   }
 
+  public function signin($passwordArg,$emailArg,$nomeArg,$cognomeArg,$dataNascitaArg){
+    session_start();
+    $admin = 0;
+    $sql = "INSERT into utenti (Nome,Cognome,Admin,Password,Email,DataNascita) values(?,?,?,?,?,?)";
+    $stm = $this->conn->prepare($sql);
+    $stm->bind_param("ssissd",$nomeArg,$cognomeArg,$admin,$passwordArg,$emailArg,$dataNascitaArg);
+    
+    $result=$stm->execute();
+    if($result){
+      $_SESSION["loggato"]=true;  //fai l accesso e sei gia loggato 
+      $_SESSION["nome"] = $_POST['nome'];
+      $_SESSION["email"] = $_POST['email'];
+      header("location: index.php");
+    }else{
+      echo "Error: " . $sql . "<br>" . $this->conn->error;
+    }
+  }
+
+
   public function select_all($tableName, $columns = array()) { // array perche chiedo piu parametri
 
     $query = 'SELECT ';
@@ -70,15 +89,6 @@ class DB {
 
     $query = 'SELECT * from articoli where Titolo LIKE "%'. $str.'%"';
 
-   /* $strCol = '';
-    //var_dump($columns); die;
-    foreach($columns as $colName) {
-      $strCol .= ' '. esc($colName) . ',';
-    }
-    $strCol = substr($strCol, 0, -1);
-
-    $query .= $strCol . ' FROM ' . $tableName . ' WHERE ' . 'Titolo LIKE "%'. $str.'%"';*/
-
     $result = mysqli_query($this->conn, $query);
     $resultArray = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
@@ -86,6 +96,29 @@ class DB {
 
     return $resultArray;
   }
+
+  public function select_one($tableName, $columns = array(), $id) {
+
+    $strCol = '';
+    foreach($columns as $colName) {
+      $colName = esc($colName);
+      $strCol .= ' ' . $colName . ',';
+    }
+    $strCol = substr($strCol, 0, -1);
+    $id = esc($id);
+    $query = "SELECT $strCol FROM $tableName WHERE id = $id";
+
+    $result = mysqli_query($this->conn, $query);
+    $resultArray = mysqli_fetch_assoc($result);
+
+    mysqli_free_result($result);
+
+    return $resultArray;
+  }
+
+
+
+
 
  public function delete_one($tableName, $id) {
 
@@ -121,6 +154,20 @@ class DBManager {
       array_push($objects, (object)$result);
     }
     return $objects;
+  }
+
+  public function getOne($str) {
+    $results = $this->db->select_one($this->tableName, $this->columns,$str);
+    $objects = array();
+    foreach($results as $result) {
+      array_push($objects, (object)$result);
+    }
+    return $objects;
+  }
+  
+  public function get($id) {
+    $resultArr = $this->db->select_one($this->tableName, $this->columns, (int)$id);
+    return (object) $resultArr;
   }
 
   public function getAll() {

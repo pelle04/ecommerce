@@ -1,10 +1,7 @@
 28/04
 
-
--4 about marchi 
-- pag carrello
+- admin
 - pag account
 - pag checkOut
--related item pag prodotto
-- far funzionare cookie e carrello ecc
-- sstemare con le classi
+- fixare aggiungi Contiene
+- unsettare i cookie col logout

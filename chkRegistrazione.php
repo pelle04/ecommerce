@@ -1,26 +1,6 @@
 <?php 
-session_start();
-include_once("connection.php");
-$nome = $_POST['nome'];
-$cognome = $_POST['cognome'];
-$email = $_POST['email'];
-$dataNascita = $_POST['dataNascita'];
-$password = md5($_POST['password']);
+include_once("init.php");
 $admin=0;
-
-  $sql = "INSERT into utenti (Nome,Cognome,Admin,Password,Email,DataNascita) values(?,?,?,?,?,?)";
-  $stm = $conn->prepare($sql);
-  $stm->bind_param("ssissd",$nome,$cognome,$admin,$password,$email,$dataNascita);
-  
-  $result=$stm->execute();
-  if($result){
-    $_SESSION["loggato"]=true;  //fai l accesso e sei gia loggato 
-    $_SESSION["nome"] = $_POST['nome'];
-    header("location: index.php");
-  }else{
-    echo "Error: " . $sql . "<br>" . $conn->error;
-  
-  }
-
-
+$db = new DB();
+$db->signin(md5($_POST['password']),$_POST['email'],$_POST['nome'],$_POST['cognome'],$_POST['dataNascita']);
 ?>
