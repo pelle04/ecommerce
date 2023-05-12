@@ -1,4 +1,5 @@
 <?php
+session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL | E_STRICT);
@@ -66,7 +67,8 @@ include_once("auth/template/header.php");
 
 
                 <span class='px-md-3 px-1'>" . $prodotto->Quantita . "</span>
-                <a href='addCart.php?quantita=1&idProdotto=" . $prodotto->Codice . "'>
+                
+                <a href='addCart.php?quantita=".$prodotto->Quantita."&idProdotto=" . $prodotto->Codice . "'>
                 <span class='fa fa-plus-square text-secondary'></span>
                 </a>
      

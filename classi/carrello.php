@@ -1,5 +1,4 @@
 <?php
-session_start();
 include("global.php");
 function console_log(string $message)
 {

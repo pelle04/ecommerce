@@ -64,7 +64,8 @@ if (isset($_POST["prodottoCercato"])) {
       }
 
 
-      if ($prodottoCercato != "") { //se utente ha cercato qualcosa 
+      if ($prodottoCercato != "") { //se utente ha cercato qualcosa
+        //echo  $prodottoCercato;
         $productManager = new ProductManager();
         $prodotti = $productManager->getLike($prodottoCercato); //tutti i prodotti
       

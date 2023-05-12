@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include_once("functions.php");
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -97,7 +97,7 @@ class DB
     return $resultArray;
   }
 
-  public function select_like($tableName, $str)
+  public function select_like($tableName, $str,$columns = array())
   {
 
     $query = 'SELECT * from articoli where Titolo LIKE "%' . $str . '%"';
@@ -167,7 +167,7 @@ class DBManager
 
   public function getLike($str)
   {
-    $results = $this->db->select_like($this->tableName, $this->columns);
+    $results = $this->db->select_like($this->tableName,$str, $this->columns);
     $objects = array();
     foreach ($results as $result) {
       if ($result['deleted'] == 0)
