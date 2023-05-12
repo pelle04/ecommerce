@@ -9,7 +9,7 @@ $quantita = $_GET["quantita"];
 $idProdotto = $_GET["idProdotto"];
 $cart = new CartManager();
 $cart->addToCart($idProdotto,$quantita);  //setta il cookie del carrello 
-$cart->controllaCookieCarrello($idUtente,$quantita,"+");
+// $cart->controllaCookieCarrello($idUtente,$quantita,"+");
 header("Location: pagCarrello.php");
 ?>
 
