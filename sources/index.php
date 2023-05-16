@@ -5,19 +5,6 @@ $filtro="";
 if (isset($_GET["filtro"])) {
     $filtro = $_GET["filtro"];
 }
-if (isset($_SESSION["id"])) {
-    $sqlControlloAdmin = "SELECT * FROM utente WHERE id=" . $_SESSION["id"];
-    $resultControlloAdmin = $conn->query($sqlControlloAdmin);
-    if ($resultControlloAdmin->num_rows > 0) {
-        while ($rowControlloAdmin = $resultControlloAdmin->fetch_assoc()) {
-
-
-            if ($rowControlloAdmin["admin"] == "1") {
-                $admin = true;
-            }
-        }
-    }
-}
 ?>
 
 
@@ -26,7 +13,7 @@ if (isset($_SESSION["id"])) {
 
 <head>
     <title>MainPage</title>
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="home.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -92,7 +79,7 @@ if (isset($_SESSION["id"])) {
                     if ($result->num_rows > 0) {
                     echo "<div class='card'>";
                     echo "<a href='Product.php?id=" . $row["id"] . "'>";
-                    echo "<img src='" . $row["path"] . "' alt='Prodotto'>";
+                    echo "<img id='cardimg' src='" . $row["path"] . "' alt='Prodotto'>";
                     echo "</a>";
                     echo "<h3>" . $row["titolo"] . "</h3>";
                     echo "<p>Prezzo: " . $row["prezzo"] . "€</p>";
@@ -127,11 +114,23 @@ if (isset($_SESSION["id"])) {
 
 
         <?php
-        if ($admin = true) {
 
 
-            echo '<a class="button" href="aggiungiProdotto.php">Admin:Aggiungi Prodotto</a>';
-        }
+            if (isset($_SESSION["id"])) {
+                $sqlControlloAdmin = "SELECT * FROM utente WHERE id=" . $_SESSION["id"];
+                $resultControlloAdmin = $conn->query($sqlControlloAdmin);
+                if ($resultControlloAdmin->num_rows > 0) {
+                    while ($rowControlloAdmin = $resultControlloAdmin->fetch_assoc()) {
+            
+            
+                        if ($rowControlloAdmin["admin"] == "1") {
+                            echo '<a class="button" href="aggiungiProdotto.php">Admin:Aggiungi Prodotto</a>';
+
+                        }
+                    }
+                }
+            }
+
         ?>
 
 

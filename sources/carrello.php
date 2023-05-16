@@ -53,7 +53,7 @@ if (!isset($_SESSION["id"])) {
 
 
         <?php
-        if(!isset($_SESSION["id"])){
+        if(isset($_SESSION["id"])){
         $data = date("Y-m-d");
         $idutente = $_SESSION['id'];
 
@@ -64,15 +64,17 @@ if (!isset($_SESSION["id"])) {
             while ($rowricercaCarrelli = $resultricercaCarrelli->fetch_assoc()) {
                 $idcarrello = $rowricercaCarrelli["id"];
                 $prodottiCarrello = "SELECT * from contiene as c join prodotto as p on c.IdProdotto=p.id join foto on p.IdFoto=idf join categoria on p.IdCategoria=idc where c.IdCarrello=" . $idcarrello;
+               // echo $prodottiCarrello;
                 $resultricercaProdotti = $conn->query($prodottiCarrello);
                 if ($resultricercaProdotti->num_rows > 0) {
                     while ($rowricercaProdotti = $resultricercaProdotti->fetch_assoc()) {
                         echo "<div class='card'>";
-                        echo "<a href='Product.php?id=" . $rowricercaProdotti["id"] . "'>";
+                        echo "<a href='Product.php?id=" . $rowricercaProdotti["idcont"] . "'>";
                         echo "<img src='" . $rowricercaProdotti["path"] . "' alt='Prodotto'>";
                         echo "</a>";
                         echo "<h3>" . $rowricercaProdotti["titolo"] . "</h3>";
                         echo "<p>Prezzo: " . $rowricercaProdotti["prezzo"] . "€</p>";
+                        echo "<a href='rimuoviProdotto.php?idcontiene=".$rowricercaProdotti["idcont"]."'><p>Rimuovi Prodotto</p></a>";
                         echo "</div>";
                     }
                 } else {

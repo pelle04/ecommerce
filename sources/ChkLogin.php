@@ -2,24 +2,24 @@
 session_start();
 include("Connection.php");
 
-$email = $_POST["email"];
-$password = $_POST["password"];
 
 
-if (isset($email, $password)) {
-    $sql = "SELECT * from utente where email='". $email ."'and password='".md5($password)."'";
-    $result = $conn->query($sql);
-    if($result->num_rows > 0){
-        $row = $result->fetch_assoc(); 
-        $_SESSION["id"]=$row["id"];
-        header('Location: index.php');
-    
+$sql = "SELECT * from utente where email=? and password=?";
+    $stm = $conn->prepare($sql);
+    $stm->bind_param("ss",$email,$password);
+    $email = $_POST["email"];
+    $password = md5($_POST["password"]);
+
+    $stm->execute();
+    $result = $stm->get_result();
+    if(mysqli_num_rows($result) ==1 ){
+      $row = mysqli_fetch_assoc($result);
+      //se accesso andato a buon fine setto la session email e la session loggato e mi manda all homepage  
+      $_SESSION['id'] = $row['id'];
+      header('Location: index.php');
     }else{
-        header('Location: index.php?msg=errore');
+
     }
-}
-
-
 
 ?>
 

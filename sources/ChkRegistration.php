@@ -16,3 +16,8 @@ if (isset($nome, $cognome, $email, $password, $indirizzo)) {
 
 }
 ?>
+
+
+
+
+

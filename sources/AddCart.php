@@ -1,7 +1,9 @@
 <?php
 session_start();
 include("Connection.php");
-
+if(!isset($_SESSION['id'])){
+    header("location: index.php?errore");
+}
 $data=date("Y-m-d");
 $idprod=$_SESSION['idProdCarrello'];
 $quant=$_GET["quantita"];
