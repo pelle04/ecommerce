@@ -74,6 +74,7 @@ if (!isset($_SESSION["id"])) {
                         echo "</a>";
                         echo "<h3>" . $rowricercaProdotti["titolo"] . "</h3>";
                         echo "<p>Prezzo: " . $rowricercaProdotti["prezzo"] . "€</p>";
+                        echo "<a href='checkOut.php?id=".$rowricercaProdotti['id']."&idCarrello=".$idcarrello."'>checkout</a>";
                         echo "<a href='rimuoviProdotto.php?idcontiene=".$rowricercaProdotti["id"]."'><p>Rimuovi Prodotto</p></a>";
                         echo "</div>";
                     }
