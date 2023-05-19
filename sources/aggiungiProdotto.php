@@ -60,7 +60,7 @@ if (isset($_SESSION["id"])) {
     <div class="container">
 
 
-        <form action='chkAggiungi.php' method='get'>
+        <form action='chkAggiungi.php' method='post'enctype="multipart/form-data">
             <h4>Prodotto</h4>
             <input type="text" name="titolo" id="titolo" placeholder="titolo" required><br>
             <textarea id="descrizione" name="descrizione" rows="4" cols="50" placeholder="descrizione" required></textarea><br>

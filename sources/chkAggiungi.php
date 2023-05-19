@@ -6,13 +6,13 @@ include("Connection.php");
 #AGGIUNTA DELLA FOTO DA ERRORE
 
 $sql="";
-
-$titolo = $_GET['titolo'];
-  $descrizione = $_GET['descrizione'];
-  $venditore = $_GET['venditore'];
-  $quantita = $_GET['quantita'];
-  $prezzo = $_GET['prezzo'];
-  $categoria = $_GET['categoria'];
+$idCategoria=1;
+$titolo = $_POST['titolo'];
+  $descrizione = $_POST['descrizione'];
+  $venditore = $_POST['venditore'];
+  $quantita = $_POST['quantita'];
+  $prezzo = $_POST['prezzo'];
+  $categoria = $_POST['categoria'];
 
   $immagine = basename( $_FILES["foto"]["name"]);
 $target_dir = "prod_images/";
@@ -54,11 +54,25 @@ if ($uploadOk == 0) {
 } else {
     if (move_uploaded_file($_FILES["foto"]["tmp_name"], $target_file)) {
         //echo "The file ". basename( $_FILES["foto"]["name"]). " has been uploaded.";
-        if ($conn->query($sql) === TRUE) {
-            header("location: index.php");
-         } else {
-           echo "Error: " . $sql . "<br>" . $conn->error;
-         }
+            $sqlcercaCategoria = 'SELECT * FROM categoria WHERE nome='.$categoria;
+            $resultcercaCategoria = $conn->query($sqlcercaCategoria);
+            if ($resultcercaCategoria->num_rows > 0) {  
+                while ($rowcercaCategoria = $resultcercaCategoria->fetch_assoc()) {
+                    $idCategoria=$row["id"];
+                }
+            }
+
+            $idfoto=6;
+            $sqlcategoria="INSERT INTO foto(path) values('$target_file')";
+            $conn->query($sqlcategoria);
+            $last_id = mysqli_insert_id($conn);
+            $sqlcategoria="INSERT INTO prodotto(titolo,descrizione, venditore, quantitaMag, prezzo, IdCategoria, IdFoto) VALUES ('$titolo','$descrizione','$venditore','$quantita','$prezzo','$idCategoria','$last_id')";
+            $conn->query($sqlcategoria);
+            echo $sqlcategoria;
+            
+            unset($_SESSION["idProdCarrello"]);
+            #header("location: index.php");
+
     } else {
         echo "Sorry, there was an error uploading your file.";
     }
@@ -66,21 +80,4 @@ if ($uploadOk == 0) {
 
 
 
-  $sqlcercaCategoria = 'SELECT * FROM categoria WHERE nome='.$categoria;
-  $resultcercaCategoria = $conn->query($sqlcercaCategoria);
-  if ($resultcercaCategoria->num_rows > 0) {  
-    while ($rowcercaCategoria = $resultcercaCategoria->fetch_assoc()) {
-        $idCategoria=$row["id"];
-  }}
-
-  $sqlcercafoto = 'SELECT * FROM categoria WHERE nome='.$immagine;
-  $resultcercafoto = $conn->query($sqlcercafoto);
-  if ($resultcercafoto->num_rows > 0) {  
-    while ($rowcercafoto = $resultcercafoto->fetch_assoc()) {
-        $idfoto=$row["id"];
-  }}
-    $idfoto=6;
-  $sqlcategoria="INSERT INTO prodotto(titolo,descrizione, venditore, quantitaMag, prezzo, IdCategoria, IdFoto) VALUES ('$titolo','$descrizione','$venditore','$quantita','$prezzo','$idCategoria','$idfoto')";
-  $conn->query($sqlcategoria);
-unset($_SESSION["idProdCarrello"]);
-header("location: index.php");
+  
