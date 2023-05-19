@@ -2,7 +2,7 @@
 session_start();
 include("Connection.php");
 if(!isset($_SESSION['id'])){
-    header("location: index.php?errore");
+    header("location: AccountRedirect.php");
 }
 $data=date("Y-m-d");
 $idprod=$_SESSION['idProdCarrello'];

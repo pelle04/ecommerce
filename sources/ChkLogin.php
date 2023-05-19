@@ -16,8 +16,10 @@ $sql = "SELECT * from utente where email=? and password=?";
       $row = mysqli_fetch_assoc($result);
       //se accesso andato a buon fine setto la session email e la session loggato e mi manda all homepage  
       $_SESSION['id'] = $row['id'];
+      $_SESSION["admin"] = $row['admin'];
       header('Location: index.php');
     }else{
+      header('Location: Login.php');
 
     }
 

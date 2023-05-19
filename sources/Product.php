@@ -14,6 +14,7 @@ if (isset($_SESSION["id"])) {
         }
     }
 }
+
 ?>
 
 
@@ -67,8 +68,9 @@ if (isset($_SESSION["id"])) {
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-
-
+                if(isset($_SESSION['admin']) && $_SESSION['admin']==1){
+                 echo '<a class="button" href="modificaProdotto.php?id='.$row['id'].'">Admin: modifica Prodotto</a>';               
+                 }  
                 echo "<div class='product'>";
                 echo "<form action='AddCart.php' method='get'>";
                 $_SESSION["idProdCarrello"] = $row["id"];
@@ -128,51 +130,8 @@ if (isset($_SESSION["id"])) {
         echo "</div>";
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         ?>
 
-
-        <?php
-        if ($admin = true) {
-
-
-            echo '<a class="button" href="modificaProdotto.php?id=' . $id . '">Admin:Modifica Prodotto</a>';
-        }
-        ?>
 
     </div>
 

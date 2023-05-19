@@ -1,7 +1,9 @@
 <?php
 session_start();
 include("Connection.php");
-$filtro="";
+if(isset($_SESSION['admin']) && $_SESSION['admin']==1){
+    echo '<a class="button" href="aggiungiProdotto.php">Admin:Aggiungi Prodotto</a>';
+}$filtro="";
 if (isset($_GET["filtro"])) {
     $filtro = $_GET["filtro"];
 }
@@ -94,47 +96,6 @@ if (isset($_GET["filtro"])) {
 
 
         </div>
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <?php
-
-
-            if (isset($_SESSION["id"])) {
-                $sqlControlloAdmin = "SELECT * FROM utente WHERE id=" . $_SESSION["id"];
-                $resultControlloAdmin = $conn->query($sqlControlloAdmin);
-                if ($resultControlloAdmin->num_rows > 0) {
-                    while ($rowControlloAdmin = $resultControlloAdmin->fetch_assoc()) {
-            
-            
-                        if ($rowControlloAdmin["admin"] == "1") {
-                            echo '<a class="button" href="aggiungiProdotto.php">Admin:Aggiungi Prodotto</a>';
-
-                        }
-                    }
-                }
-            }
-
-        ?>
-
-
-
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -9,7 +9,7 @@ $venditore = $_GET['venditore'];
 $quantita = $_GET['quantita'];
 $prezzo = $_GET['prezzo'];
 $id=$_SESSION["idProdCarrello"];
-$sql = "UPDATE prodotto SET titolo='$titolo', descrizione='$descrizione', venditore='$venditore', quantita='$quantita', prezzo='$prezzo' WHERE id=$id";
+$sql = "UPDATE prodotto SET titolo='$titolo', descrizione='$descrizione', venditore='$venditore', quantitaMag='$quantita', prezzo='$prezzo' WHERE id=$id";
 $conn->query($sql);
 unset($_SESSION["idProdCarrello"]);
 header("location: index.php");

@@ -1,7 +1,9 @@
 <?php
 session_start();
 include("Connection.php");
-
+if(!isset($_SESSION['id'])){
+    header("location: AccountRedirect.php");
+}
 ?>
 
 

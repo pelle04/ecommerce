@@ -69,12 +69,12 @@ if (!isset($_SESSION["id"])) {
                 if ($resultricercaProdotti->num_rows > 0) {
                     while ($rowricercaProdotti = $resultricercaProdotti->fetch_assoc()) {
                         echo "<div class='card'>";
-                        echo "<a href='Product.php?id=" . $rowricercaProdotti["idcont"] . "'>";
+                        echo "<a href='Product.php?id=" . $rowricercaProdotti["id"] . "'>";
                         echo "<img src='" . $rowricercaProdotti["path"] . "' alt='Prodotto'>";
                         echo "</a>";
                         echo "<h3>" . $rowricercaProdotti["titolo"] . "</h3>";
                         echo "<p>Prezzo: " . $rowricercaProdotti["prezzo"] . "€</p>";
-                        echo "<a href='rimuoviProdotto.php?idcontiene=".$rowricercaProdotti["idcont"]."'><p>Rimuovi Prodotto</p></a>";
+                        echo "<a href='rimuoviProdotto.php?idcontiene=".$rowricercaProdotti["id"]."'><p>Rimuovi Prodotto</p></a>";
                         echo "</div>";
                     }
                 } else {
