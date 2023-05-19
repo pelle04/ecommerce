@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 12, 2023 alle 22:41
--- Versione del server: 10.4.25-MariaDB
--- Versione PHP: 8.1.10
+-- Creato il: Mag 19, 2023 alle 08:21
+-- Versione del server: 10.4.28-MariaDB
+-- Versione PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,14 +31,15 @@ CREATE TABLE `carrello` (
   `id` int(32) NOT NULL,
   `data` date NOT NULL,
   `IdUtente` int(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `carrello`
 --
 
 INSERT INTO `carrello` (`id`, `data`, `IdUtente`) VALUES
-(3, '2023-05-12', 4);
+(3, '2023-05-12', 4),
+(4, '2023-05-19', 5);
 
 -- --------------------------------------------------------
 
@@ -49,14 +50,16 @@ INSERT INTO `carrello` (`id`, `data`, `IdUtente`) VALUES
 CREATE TABLE `categoria` (
   `idc` int(32) NOT NULL,
   `nome` varchar(256) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `categoria`
 --
 
 INSERT INTO `categoria` (`idc`, `nome`) VALUES
-(5, 'Cronografo');
+(5, 'Cronografo'),
+(6, 'gmt'),
+(8, 'acciaio');
 
 -- --------------------------------------------------------
 
@@ -70,7 +73,14 @@ CREATE TABLE `commento` (
   `stelle` int(1) NOT NULL,
   `IdUtente` int(32) NOT NULL,
   `IdProdotto` int(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `commento`
+--
+
+INSERT INTO `commento` (`id`, `text`, `stelle`, `IdUtente`, `IdProdotto`) VALUES
+(14, 'molto bello ma sono povero', 5, 5, 7);
 
 -- --------------------------------------------------------
 
@@ -83,7 +93,7 @@ CREATE TABLE `contiene` (
   `IdCarrello` int(32) NOT NULL,
   `IdProdotto` int(32) NOT NULL,
   `quantita` int(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `contiene`
@@ -91,9 +101,8 @@ CREATE TABLE `contiene` (
 
 INSERT INTO `contiene` (`id`, `IdCarrello`, `IdProdotto`, `quantita`) VALUES
 (6, 3, 7, 1),
-(7, 3, 7, 1),
 (8, 3, 7, 1),
-(9, 3, 7, 2);
+(11, 4, 7, 1);
 
 -- --------------------------------------------------------
 
@@ -104,7 +113,7 @@ INSERT INTO `contiene` (`id`, `IdCarrello`, `IdProdotto`, `quantita`) VALUES
 CREATE TABLE `foto` (
   `idf` int(32) NOT NULL,
   `path` varchar(256) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `foto`
@@ -114,7 +123,12 @@ INSERT INTO `foto` (`idf`, `path`) VALUES
 (6, 'prod_images\\Rolex Daytona 116503.jpg'),
 (7, 'uploads/'),
 (8, 'uploads/'),
-(9, 'uploads/');
+(9, 'uploads/'),
+(10, 'prod_images\\APCrono.jpg'),
+(11, 'prod_images\\royalOak.jpg'),
+(13, 'prod_images\\patek.jpg'),
+(14, 'prod_images\\patekCrono.jpg'),
+(15, 'prod_images\\gmt.jpg');
 
 -- --------------------------------------------------------
 
@@ -127,7 +141,7 @@ CREATE TABLE `ordine` (
   `data` date NOT NULL,
   `prezzo` int(32) NOT NULL,
   `IdCarrello` int(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -144,14 +158,18 @@ CREATE TABLE `prodotto` (
   `prezzo` int(32) NOT NULL,
   `IdCategoria` int(32) NOT NULL,
   `IdFoto` int(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `prodotto`
 --
 
 INSERT INTO `prodotto` (`id`, `titolo`, `descrizione`, `venditore`, `quantitaMag`, `prezzo`, `IdCategoria`, `IdFoto`) VALUES
-(7, 'Rolex Daytona 116503', 'Sinonimo di eccellenza e affidabilità, gli orologi Rolex sono progettati per essere indossati ogni giorno e, a seconda del modello, sono assolutamente adatti per praticare numerosi sport e altre attività. Costruiti per durare, questi orologi sono caratterizzati da un’estetica inconfondibile e senza tempo.', 'Rolex', '5', 22500, 5, 6);
+(7, 'Rolex Daytona 116503', 'Sinonimo di eccellenza e affidabilità, gli orologi Rolex sono progettati per essere indossati ogni giorno e, a seconda del modello, sono assolutamente adatti per praticare numerosi sport e altre attività. Costruiti per durare, questi orologi sono caratterizzati da un’estetica inconfondibile e senza tempo.\r\n\r\n', 'Rolex', '3', 24000, 5, 6),
+(8, 'Rolex gmt pepsi ', 'Rolex gmt pepsi con cinturino oyster', 'Rolex', '10', 22000, 6, 15),
+(9, 'Audemars Piguet Royal Oak Chrono', 'AP Chrono limited edition', 'Audemars Piguet', '3', 80000, 5, 10),
+(10, 'patek philippe nautilus 5711', 'nautilus acciao , fondello vetro , 5711 ', 'Patek Philippe', '3', 70000, 8, 13),
+(11, 'patek philippe chrono 5712', 'nautilus acciao , fondello vetro , 5712, chrono ', 'patek philippe', '5', 120000, 5, 14);
 
 -- --------------------------------------------------------
 
@@ -167,14 +185,15 @@ CREATE TABLE `utente` (
   `password` varchar(256) NOT NULL,
   `indirizzo` varchar(256) NOT NULL,
   `admin` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `utente`
 --
 
 INSERT INTO `utente` (`id`, `nome`, `cognome`, `email`, `password`, `indirizzo`, `admin`) VALUES
-(4, 'admin', 'admin', 'admin@gmail.com', '5f4dcc3b5aa765d61d8327deb882cf99', 'admin', 1);
+(4, 'admin', 'admin', 'admin@gmail.com', '5f4dcc3b5aa765d61d8327deb882cf99', 'admin', 1),
+(5, 'marco ', 'pellegrino', 'pellegrinomarco04@gmail.com', 'f5888d0bb58d611107e11f7cbc41c97a', 'via fratelli rosselli', 1);
 
 --
 -- Indici per le tabelle scaricate
@@ -244,31 +263,31 @@ ALTER TABLE `utente`
 -- AUTO_INCREMENT per la tabella `carrello`
 --
 ALTER TABLE `carrello`
-  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT per la tabella `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `idc` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idc` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT per la tabella `commento`
 --
 ALTER TABLE `commento`
-  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT per la tabella `contiene`
 --
 ALTER TABLE `contiene`
-  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT per la tabella `foto`
 --
 ALTER TABLE `foto`
-  MODIFY `idf` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idf` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT per la tabella `ordine`
@@ -280,13 +299,13 @@ ALTER TABLE `ordine`
 -- AUTO_INCREMENT per la tabella `prodotto`
 --
 ALTER TABLE `prodotto`
-  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT per la tabella `utente`
 --
 ALTER TABLE `utente`
-  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Limiti per le tabelle scaricate
